@@ -6,14 +6,10 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Button,
   Heading,
   Text,
-  useColorModeValue,
-  Image,
-  VStack,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../constants/config";

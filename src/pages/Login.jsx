@@ -5,20 +5,18 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Button,
   Heading,
   Text,
-  useColorModeValue,
-  Image,
-  VStack,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../Redux/users/userAction";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { auth, token, loading, error } = useSelector(
     (state) => state.userReducer
@@ -27,8 +25,6 @@ export default function Login() {
   if (auth) {
     navigate("/notes");
   }
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
   const handleLogin = () => {
@@ -77,9 +73,7 @@ export default function Login() {
                 direction={{ base: "column", sm: "row" }}
                 align={"start"}
                 justify={"space-between"}
-              >
-               
-              </Stack>
+              ></Stack>
               <Button
                 onClick={handleLogin}
                 bg={"blue.400"}

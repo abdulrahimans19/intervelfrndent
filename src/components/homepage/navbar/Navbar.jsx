@@ -2,14 +2,12 @@ import {
   Box,
   Flex,
   Avatar,
-  Text,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
   useColorMode,
@@ -24,10 +22,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { auth, token, loading, error } = useSelector(
-    (state) => state.userReducer
-  );
+  const { auth } = useSelector((state) => state.userReducer);
   return (
     <>
       <Box
@@ -45,7 +40,7 @@ export default function Navbar() {
           <Flex alignItems={"center"}>
             <Stack alignItems={"center"} direction={"row"} spacing={7}>
               <Button
-                display={auth == true ? "none" : "block"}
+                display={auth === true ? "none" : "block"}
                 onClick={() => {
                   navigate("/");
                 }}
@@ -53,7 +48,7 @@ export default function Navbar() {
                 Login
               </Button>
               <Button
-                display={auth == true ? "none" : "block"}
+                display={auth === true ? "none" : "block"}
                 onClick={() => {
                   navigate("/register");
                 }}
@@ -61,7 +56,7 @@ export default function Navbar() {
                 signup
               </Button>
               <Button
-                display={auth == true ? "block" : "none"}
+                display={auth === true ? "block" : "none"}
                 onClick={() => {
                   navigate("/notes");
                 }}

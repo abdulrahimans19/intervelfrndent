@@ -75,7 +75,7 @@ export const updateNotes = (id, obj) => async (dispatch) => {
 
   dispatch({ type: UPDATE_NOTES_LOADING });
   try {
-    const res = await axios(BASE_URL + "/note/update", {
+    const res = await axios(BASE_URL + "/note/update/:id", {
       method: "patch",
       data: obj,
       headers: {
@@ -103,7 +103,7 @@ export const deleteNotes = (id) => async (dispatch) => {
   const { token } = store.getState().userReducer;
   dispatch({ type: DELETE_NOTES_LOADING });
   try {
-    const res = await axios(BASE_URL + "/note/delete", {
+    const res = await axios(BASE_URL + "/note/delete/:id", {
       method: "delete",
       headers: {
         Authorization: token,

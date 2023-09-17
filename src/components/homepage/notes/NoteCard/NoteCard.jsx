@@ -1,15 +1,15 @@
+import React, { useRef, useState } from "react";
 import {
   Button,
   Card,
   CardBody,
   Flex,
   Heading,
-  Select,
+  Image,
   Text,
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-
 import {
   Modal,
   Input,
@@ -18,21 +18,22 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
+  Select,
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
 import "./style.css";
 import { useDispatch } from "react-redux";
 import { deleteNotes, updateNotes } from "../../../../Redux/notes/noteAction";
-import { useRef, useState } from "react";
-export default function NoteCard({ title, body, textColor, user, _id }) {
+
+export default function NoteCard({ title, priority, body, image, user, _id }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
 
   const [updateTitle, setUpdateTitle] = useState("");
   const [updateBody, setUpdateBody] = useState("");
-  const [updateTextColor, setUpdateTextColor] = useState("black");
+  const [updatePriority, setUpdatePriority] = useState(priority); // Initialize with the current priority
   const dispatch = useDispatch();
 
   const updateNote = () => {
@@ -40,16 +41,18 @@ export default function NoteCard({ title, body, textColor, user, _id }) {
       updateNotes(_id, {
         title: updateTitle,
         body: updateBody,
-        textColor: updateTextColor,
+        priority: updatePriority,
       })
     );
+    onClose();
   };
+
   return (
     <Card className="card">
       <CardBody>
         <VStack>
           <Heading>{title}</Heading>
-          <Text color={textColor}>{body}</Text>
+          <Text>{body}</Text>
           <Flex gap={2}>
             <Button onClick={onOpen}>Update</Button>
             <>
@@ -61,30 +64,28 @@ export default function NoteCard({ title, body, textColor, user, _id }) {
               >
                 <ModalOverlay />
                 <ModalContent>
-                  <ModalHeader>Update New Note</ModalHeader>
+                  <ModalHeader>Update Note</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody pb={6}>
                     <Input
                       value={updateTitle}
-                      placeholder="please Update title"
+                      placeholder="Please update title"
                       onChange={(e) => setUpdateTitle(e.target.value)}
-                    ></Input>
+                    />
                     <Textarea
-                      mt={8}
+                      mt={4}
                       value={updateBody}
-                      placeholder="please Update description"
+                      placeholder="Please update description"
                       onChange={(e) => setUpdateBody(e.target.value)}
-                    ></Textarea>
+                    />
                     <Select
-                      mt={8}
-                      value={updateTextColor}
-                      onChange={(e) => setUpdateTextColor(e.target.value)}
+                      mt={4}
+                      value={updatePriority}
+                      onChange={(e) => setUpdatePriority(e.target.value)}
                     >
-                      <option value="black">Black</option>
-                      <option value="red">Red</option>
-                      <option value="white">White</option>
-                      <option value="green">Green</option>
-                      <option value="yellow">Yellow</option>
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
                     </Select>
                   </ModalBody>
                   <ModalFooter>
@@ -105,6 +106,12 @@ export default function NoteCard({ title, body, textColor, user, _id }) {
               Delete
             </Button>
           </Flex>
+          <Image
+            src={image}
+            alt="Note Image"
+            boxSize="100px"
+            objectFit="cover"
+          />
         </VStack>
       </CardBody>
     </Card>
